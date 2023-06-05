@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: blue;
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+ul{
+    display: flex;
+    gap: 5rem;
+}
+.container{
+    width: 80%;
+    margin: auto;
+}
+.section-container{
+    margin-top: 2rem;
+}
+.section-container h2{
+    color: red;
+    text-align: center;
+}
+.section-mapped-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid red;
+    gap: 2rem;
+}
