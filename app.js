@@ -22,6 +22,8 @@ const port = process.env.PORT || 8080
     //     next()
     // })
 app.use(express.static('public'))
+app.use(express.urlencoded({extended:true}))
+
 // mongoDB connection
 const connect = ()=>{
     mongoose.connect(db_url)
@@ -114,6 +116,19 @@ app.get('/todos', async (req,res)=>{
       catch(err){
         console.log(err);
     }
+})
+
+// 
+app.post('/todos',(req,res)=>{
+    console.log(req.body);
+    const savedTrainee = new Trainees(req.body)
+    savedTrainee.save()
+    .then((result)=>{
+        res.redirect('/todos')
+    }) 
+    .catch((err)=>{
+        console.log(err);
+    })
 })
 
 app.get('/about',(req,res)=>{
