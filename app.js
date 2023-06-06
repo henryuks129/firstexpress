@@ -36,12 +36,12 @@ const connect = ()=>{
 // .catch((err)=>console.log(err))
 
 // TESTING OUR MODEL AND DB
-app.get('/add-trainee', async (req,res)=>{
-    const TRAINEES = new Trainees({
-        name: 'christy',
-        profession: 'senior dev',
-        description: 'she\'s quite good at it'
-    })
+// app.get('/add-trainee', async (req,res)=>{
+//     const TRAINEES = new Trainees({
+//         name: 'christy',
+//         profession: 'senior dev',
+//         description: 'she\'s quite good at it'
+//     })
     // TRAINEES.save()
     // .then((result)=>{
     //     res.send(result);
@@ -50,22 +50,22 @@ app.get('/add-trainee', async (req,res)=>{
     //     console.log(err);
     // })
     // For saving all the info in the DB
-    try{
-        const savedTrainees = await TRAINEES.save()
-        res.send(savedTrainees)
-    } catch(err){
-        console.log(err);
-    }
-})
+//     try{
+//         const savedTrainees = await TRAINEES.save()
+//         res.send(savedTrainees)
+//     } catch(err){
+//         console.log(err);
+//     }
+// })
 
 // For getting all info from the DB
-app.get('/all-trainees', async (req,res)=>{
-    try{
-        const allTrainess = await Trainees.find()
-        res.send(allTrainess)
-    } catch(err){
-        console.log(err);
-    }
+// app.get('/all-trainees', async (req,res)=>{
+//     try{
+//         const allTrainees = await Trainees.find()
+//         res.send(allTrainees)
+//     } catch(err){
+//         console.log(err);
+//     }
     // Trainees.find()
     // .then((results)=>{
     //     res.send(results)
@@ -73,16 +73,16 @@ app.get('/all-trainees', async (req,res)=>{
     // .catch((err)=>{
     //     console.log(err);
     // })
-})
+// })
 
 // To get a single trainee
-app.get('/single-trainee', async (req,res)=>{
-    try{
-        const singleTrainee = await Trainees.findById('647efeda41dc51972d3cc7a7')
-        res.send(singleTrainee)
-    } catch(err){
-        console.log(err);
-    }
+// app.get('/single-trainee', async (req,res)=>{
+//     try{
+//         const singleTrainee = await Trainees.findById('647efeda41dc51972d3cc7a7')
+//         res.send(singleTrainee)
+//     } catch(err){
+//         console.log(err);
+//     }
     // Trainees.findById('')
     // .then((result)=>{
     //     res.send(result)
@@ -90,29 +90,41 @@ app.get('/single-trainee', async (req,res)=>{
     // .catch((err)=>{
     //     console.log(err);
     // })
-})
+// })
 
  // Routes
-const trainees = [
-    {name: 'Christy',profession: 'front-end dev'},
-    {name: 'Ejiro',profession: 'back-end dev'},
-    {name: 'Henry',profession: 'mobile app dev'},
-    {name: 'John',profession: 'desktop dev'},
-]
+// const trainees = [
+//     {name: 'Christy',profession: 'front-end dev'},
+//     {name: 'Ejiro',profession: 'back-end dev'},
+//     {name: 'Henry',profession: 'mobile app dev'},
+//     {name: 'John',profession: 'desktop dev'},
+// ]
 
 
 app.get('/',(req,res)=>{
-    res.render('index',{title: 'EJS Home Page',trainees})
+    res.redirect('/todos')
+})
+
+// todo routes
+app.get('/todos', async (req,res)=>{
+    try{
+        const allTrainees = await Trainees.find()
+        res.render('index',{title: 'EJS Home Page', trainees:allTrainees})
+    }
+      catch(err){
+        console.log(err);
+    }
 })
 
 app.get('/about',(req,res)=>{
-    res.render('about',{title: 'EJS About Page',trainees})
+    res.render('about',{title: 'EJS About Page'})
 })
 
 app.get('/todo/create',(req,res)=>{
     res.render('createList',{title: 'EJS createList page'})
 })
 
+// middleware
 app.use((req,res)=>{
     res.status(404).render('404',{title: 'EJS 404 Error Page'})
 })
