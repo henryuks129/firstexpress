@@ -1,12 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose')
+const Trainees = require('./model/todoModel')
 
 const app = express()
-const PORT = 8080
+
 
 // config ejs
 app.set('view engine', 'ejs')
 require('dotenv').config()
+
+// ENVIRONMENTAL VARIABLE
+const db_url = process.env.DBURL
+const port = process.env.PORT || 8080
 
 
 // custom middleware
@@ -17,10 +22,76 @@ require('dotenv').config()
     //     next()
     // })
 app.use(express.static('public'))
-mongoose.connect(process.env.DBURL)
-.then(()=> console.log('DB connected successfully'))
-.catch((err)=>console.log(err))
-    
+// mongoDB connection
+const connect = ()=>{
+    mongoose.connect(db_url)
+    try{
+        console.log('DB connected successfully');
+    }catch (err){
+        console.log(err);
+    }
+}
+// mongoose.connect(process.env.DBURL)
+// .then(()=> console.log('DB connected successfully'))
+// .catch((err)=>console.log(err))
+
+// TESTING OUR MODEL AND DB
+app.get('/add-trainee', async (req,res)=>{
+    const TRAINEES = new Trainees({
+        name: 'christy',
+        profession: 'senior dev',
+        description: 'she\'s quite good at it'
+    })
+    // TRAINEES.save()
+    // .then((result)=>{
+    //     res.send(result);
+    // })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+    // For saving all the info in the DB
+    try{
+        const savedTrainees = await TRAINEES.save()
+        res.send(savedTrainees)
+    } catch(err){
+        console.log(err);
+    }
+})
+
+// For getting all info from the DB
+app.get('/all-trainees', async (req,res)=>{
+    try{
+        const allTrainess = await Trainees.find()
+        res.send(allTrainess)
+    } catch(err){
+        console.log(err);
+    }
+    // Trainees.find()
+    // .then((results)=>{
+    //     res.send(results)
+    // })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+})
+
+// To get a single trainee
+app.get('/single-trainee', async (req,res)=>{
+    try{
+        const singleTrainee = await Trainees.findById('647efeda41dc51972d3cc7a7')
+        res.send(singleTrainee)
+    } catch(err){
+        console.log(err);
+    }
+    // Trainees.findById('')
+    // .then((result)=>{
+    //     res.send(result)
+    // })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+})
+
  // Routes
 const trainees = [
     {name: 'Christy',profession: 'front-end dev'},
@@ -51,6 +122,7 @@ app.get('/about-us',(req,res)=>{
     res.redirect('/about')
 })
 
-app.listen(PORT,()=>{
-    console.log('logged successfully');
+app.listen(port,()=>{
+    connect()
+    console.log(`logged successfully ${port}`)
 })
