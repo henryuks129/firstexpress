@@ -8,11 +8,14 @@
         <hr>
         <% if(trainees.length){ %>
             <% trainees.map((trainee)=>{ %>
-                <div class="section-mapped-data">
-                <h1> <%= trainee.name %> </h1>
-                <h3> <%= trainee.profession %> </h3>
-                <h3> <%= trainee.description %> </h3>
-                </div>
+                    <div class="section-mapped-data">
+                        <a href="/todos/specific/<%= trainee._id %>">
+                            <h1> <%= trainee.name %> </h1>
+                            <!-- <h3> <%= trainee.profession %> </h3> -->
+                            <!-- <h3> <%= trainee.description %> </h3> -->
+                            <!-- <h3>  <%= trainee.address %> </h3> -->
+                        </a>
+                    </div>
            <% }) %>
            <% }else{ %>
             <h1>No trainees in town today</h1>
