@@ -24,34 +24,36 @@ router.get('/specific/:id', todoControllers.todos_Params)
 router.get('/delete/:id', todoControllers.todos_Delete)
 
 // editing 
-router.get("/edits/:id", (req, res) => {
-    res.render("newList", {
-        title: "EJS createList page"
-    }); 
-});
-
-router.put('/edits/:id',(req,res)=>{
+router.post('/edits/:id',(req,res)=>{
     const id = req.params.id;
     const updatedData = req.body
     // Trainees.findOneAndReplace('6480890c1a979a96231b925d').then((result)=>{
     //     res.redirect('/todo/edits')
     // })
-    Trainees.findById(id).then((result)=>{
-        res.render('createList')
-    })
-    Trainees.findByIdAndUpdate(id, updatedData, {new: true}, (err, Trainees)=>{
-        if (err){   
-            console.log(err);
-            return res.redirect('/edits')
-        }
-    })
+    // Trainees.findById(id).then((result)=>{
+    //     res.render('createList')
+    // })
+    Trainees.findByIdAndUpdate(id, updatedData, {new: true})
     .then((result)=>{
-        res.redirect('/edits/:id')
+        res.redirect('/todos')
     })
     // Trainees.findByIdAndDelete(id).then((result)=>{ 
     //     res.redirect('/todos')
     // })
 })
+
+router.get("/edits/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    Trainees.findById(id).then((result) => {
+        res.render("newList", { trainees: result,
+            title: "EJS newList page"
+        }); 
+    });
+    // res.render("newList", {
+    //     title: "EJS createList page"
+    // }); 
+});
 
 
 

@@ -118,7 +118,8 @@ app.get("/about", (req, res) => {
 app.use('/todos', todoRouter)
 
 app.use((req, res) => {
-    res.status().render("404", {
+    const statusCode = undefined;
+    res.status(statusCode || 400).render("404", {
         title: "EJS 404 Error Page"
     });
 });

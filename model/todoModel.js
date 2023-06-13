@@ -17,10 +17,10 @@ const traineeeSchema = new Schema({
         type: String,
         required: true,
     },
-    address: {
-        type: String,
-        required: true,
-    }
+    // address: {
+    //     type: String,
+    //     required: true,
+    // }
 },{timestamps: true})
 
 // let's create our model(model is what surrounds the schema and provides us with an interface by which to communicate with our DB)
